@@ -56,6 +56,25 @@ GenerateTasksForFastMatching = function(Samples, Score)
   return (tasks)
 }
 
+GenerateParticularTasksForFastMatching = function(Score, Rows, Columns)
+{
+  tasks <- vector('list')
+  n = 1
+  
+  for (i in Rows) 
+  {     
+    for (j in Columns)
+    {
+      tasks[[n]] <- list(SampleNumber = i, OtherSampleNumber = j, AlignmentScore = Score)  
+      n = n + 1      
+    }  
+  }
+  
+  return (tasks)
+}
+
+
+
 GenerateEmptyMatricies = function(RowsQty, ColsQty, ScoreStart, ScoreEnd)
 {
   Matricies <- vector('list')
@@ -94,6 +113,5 @@ SaveResults = function(HitMatrix, SampleNames)
   rownames(HitMatrix) = SampleNames
   
   ResDf = as.data.frame(HitMatrix)
-  write.table(ResDf,file = "c:/CRISPr/ThermusToPhage/data/res_score_sampleVSsample.txt")  
-  
+  write.table(ResDf,file = "c:/CRISPr/ThermusToPhage/data/res_score_sampleVSsample.txt")   
 }

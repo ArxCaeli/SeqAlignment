@@ -18,8 +18,7 @@ library("Rmpi")
 
 source("C:/CRISPr/ThermusToPhage/scripts/r_loading.R")
 source("C:/CRISPr/ThermusToPhage/scripts/r_scores.R")
-source("C:/CRISPr/ThermusToPhage/scripts/r_mpi_helper.R")
-
+source("./Scripts/r_mpi_helper.R")
 
 #phage fasta loading
 DataFolder = "C:/CRISPr/ThermusToPhage/data/Clusters/" 
