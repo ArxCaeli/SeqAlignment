@@ -14,6 +14,11 @@
 
 library(Biostrings)
 library(ShortRead)
+library("Rmpi")
+
+source("C:/CRISPr/ThermusToPhage/scripts/r_loading.R")
+source("C:/CRISPr/ThermusToPhage/scripts/r_scores.R")
+source("C:/CRISPr/ThermusToPhage/scripts/r_mpi_helper.R")
 
 
 #phage fasta loading
@@ -32,5 +37,15 @@ Samples = list.files(DataFolder, full.names=TRUE, recursive = F)#T)
 PhageNames = list.files(PhageFolder, pattern="*.f*", full.names=F)
 SampleNames = list.files(DataFolder, full.names=F, recursive = T)
 
-#Expression_Matrix = matrix(ncol = length(Phages), nrow = length(Samples))
-#TaskLength = length(Expression_Matrix)
+AllSpacers = c()
+for (i in 1:length(Samples)) 
+{ 
+  AllSpacers = c(AllSpacers, readDNAStringSet(Samples[i]))  
+}
+
+tasks = GenerateTasksForFastMatching(Samples, Score)
+
+Score = 29
+
+HitMatrix = matrix(ncol = length(Samples), nrow = length(Samples))
+

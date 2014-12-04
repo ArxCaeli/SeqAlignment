@@ -8,7 +8,6 @@ DataFolder = "E:/downloads/documents-export-2014-10-26/"
 NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/Spacers/"
 
 
-
 Samples = list.files(DataFolder, full.names=TRUE, recursive = T)
 Samples
 Spacers = readDNAStringSet(Samples[1])

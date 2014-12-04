@@ -6,13 +6,6 @@
 # only mpi related stuff
 # for globals see r_loading 
 
-library("Rmpi")
-source("C:/CRISPr/ThermusToPhage/scripts/r_loading.R")
-source("C:/CRISPr/ThermusToPhage/scripts/r_scores.R")
-source("C:/CRISPr/ThermusToPhage/scripts/r_mpi_helper.R")
-
-CPUSlaves = 6
-
 # Notice we just say "give us all the slaves you've got."
 #mpi.spawn.Rslaves(nslaves = CPUSlaves) # 6 processes 
 
@@ -44,7 +37,7 @@ getScore <- function() {
   done <- 0 
   print("started")
   library(Biostrings)
-  
+  source("C:/CRISPr/ThermusToPhage/scripts/r_mpi_helper.R")
   
   while (done != 1) {
     # Signal being ready to receive a new task 
@@ -57,22 +50,11 @@ getScore <- function() {
     
     if (tag == 1) 
     {
-      print(paste(task$SampleNumber, task$OtherSampleNumber, "Task Received"))
-      
-      SampleSpacers = AllSpacers[[task$SampleNumber]]
-      OtherSampleSpacers = AllSpacers[[task$OtherSampleNumber]]
-      AlignmentScoreBoundary = task$AlignmentScore
-      
-      MismatchScore = length(SampleSpacers[[1]]) - AlignmentScoreBoundary
-      
-      print(paste("Task started: mismatchscore", MismatchScore))
-      Score = sum(vcountPDict(SampleSpacers, OtherSampleSpacers, with.indels = T, collapse = 1, max.mismatch = MismatchScore))
-      
-      Result <- list(result = Score, SampleNumber = task$SampleNumber, OtherSampleNumber = task$OtherSampleNumber)
+      Result = GetScore(task, AllSpacers)
       mpi.send.Robj(Result,0,2)      
     }    
     else if (tag == 2) {
-      print("Done received")
+      print("Finished")
       done <- 1
     }
     # We'll just ignore any unknown messages
@@ -88,20 +70,6 @@ print("Sending data to slaves")
 
 junk <- 0 
 
-AllSpacers = c()
-
-for (i in 1:length(Samples)) 
-{ 
-  AllSpacers = c(AllSpacers, readDNAStringSet(Samples[i]))  
-}
-
-Score = 29
-tasks = GenerateTasksForFastMatching(Samples, Score)
-
-print(paste(length(tasks), "tasks generated"))
-
-HitMatrix = matrix(ncol = length(Samples), nrow = length(Samples))
-
 # Now, send the data to the slaves
 mpi.bcast.Robj2slave(AllSpacers)
 
@@ -112,14 +80,11 @@ mpi.bcast.Robj2slave(getScore)
 # undertake tasks
 mpi.bcast.cmd(getScore())
 
-junk <- 0 
 closed_slaves <- 0
-n_slaves = 0
 n_slaves <- mpi.comm.size() - 1 
 print(paste("Slaves: ",n_slaves))
 
 print("Master Started")
-
 while (closed_slaves < n_slaves) 
 { 
   # Receive a message from a slave  
@@ -152,16 +117,9 @@ while (closed_slaves < n_slaves)
     # A slave has closed down. 
     closed_slaves <- closed_slaves + 1 
   }   
-} 
+}
 
-
-Expression_Matrix = HitMatrix
-
-colnames(Expression_Matrix) <- SampleNames
-rownames(Expression_Matrix) = SampleNames
-
-ResDf = as.data.frame(Expression_Matrix)
-write.table(ResDf,file = "c:/CRISPr/ThermusToPhage/data/res_score_sampleVSsample.txt")  
+SaveResults(HitMatrix, SampleNames)
 
 mpi.close.Rslaves()
 mpi.quit(save="no")
