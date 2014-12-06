@@ -1,3 +1,4 @@
+#helper stuff
 library(Biostrings)
 
 Spacers = sapply(1:2000, function(x) paste(sample(c("A", "C", "G", "T"), 32, replace=TRUE,prob=c(0.25, 0.25, 0.25, 0.25)), collapse=""))
