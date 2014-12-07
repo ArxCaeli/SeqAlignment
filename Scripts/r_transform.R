@@ -52,10 +52,12 @@ for(i in 1:length(Samples))
 
 #to fasta
 DataFolder = "E:/downloads/data14/resAll/"
-NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/Clusters/Slon"
+DataFolder = "E:/downloads/clustersFiltered/resFiltered"
+NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/extra/Slon2"
+
+Samples = list.files(DataFolder, full.names=TRUE, recursive = T)
 
 library(ShortRead)
-
 
 for(i in 1:length(Samples))
 {

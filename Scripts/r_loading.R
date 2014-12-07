@@ -19,11 +19,12 @@ source("./r_mpi_helper.R")
 
 #phage fasta loading
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Clusters/" 
-DataFolder = "C:/CRISPr/ThermusToPhage/data/MiniCluster/" # for debug
+#DataFolder = "C:/CRISPr/ThermusToPhage/data/MiniCluster/" # for debug
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Test/" 
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Spacers/"
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/MiniSpacers/"
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Clusters/Slon/"
+DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/Slon2"
 
 PhageFolder = "c:/CRISPr/ThermusToPhage/data/phages/"
 

@@ -4,7 +4,7 @@ library(gplots)
 library(ggplot2)
 library(RColorBrewer);
 
-AlignmentScores = read.table("c:/CRISPr/ThermusToPhage/data/res_score_sampleVSsample_clean_29_Systems.txt")
+AlignmentScores = read.table("c:/CRISPr/ThermusToPhage/data/res_score_slon2.txt")
 AlignmentScoresMatrix = data.matrix(AlignmentScores)
 
 
