@@ -11,18 +11,15 @@
 # biocLite("ShortRead")
 # biocLite("org.Mm.eg.db")
 #biocLite("BiocParallel")
-
+library("Rmpi")
 library(Biostrings)
 library(ShortRead)
-library("Rmpi")
+source("./r_mpi_helper.R")
 
-source("C:/CRISPr/ThermusToPhage/scripts/r_loading.R")
-source("C:/CRISPr/ThermusToPhage/scripts/r_scores.R")
-source("./Scripts/r_mpi_helper.R")
 
 #phage fasta loading
-DataFolder = "C:/CRISPr/ThermusToPhage/data/Clusters/" 
-#DataFolder = "C:/CRISPr/ThermusToPhage/data/MiniCluster/" # for debug
+#DataFolder = "C:/CRISPr/ThermusToPhage/data/Clusters/" 
+DataFolder = "C:/CRISPr/ThermusToPhage/data/MiniCluster/" # for debug
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Test/" 
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Spacers/"
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/MiniSpacers/"
@@ -42,9 +39,9 @@ for (i in 1:length(Samples))
   AllSpacers = c(AllSpacers, readDNAStringSet(Samples[i]))  
 }
 
+Score = 29
 tasks = GenerateTasksForFastMatching(Samples, Score)
 
-Score = 29
 
 HitMatrix = matrix(ncol = length(Samples), nrow = length(Samples))
 

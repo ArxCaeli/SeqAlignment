@@ -1,13 +1,20 @@
 # Using vcountPDict instead of pairwise alignment - a lot of memory instead a lot of time
 # To run: 3 - 1gb per process
 # mpiexec -n 3 "C:\Program Files\R\R-3.1.1\bin\x64\Rterm.exe" --no-save -q
-# source("r_mpi_iterative.R")
+# source("r_mpi_fastSeqMatch.R")
 
 # only mpi related stuff
 # for globals see r_loading 
 
 # Notice we just say "give us all the slaves you've got."
 #mpi.spawn.Rslaves(nslaves = CPUSlaves) # 6 processes 
+
+
+
+source("./r_loading.R")
+#source("./Scripts/r_scores.R")
+
+print("Initial loading done.")
 
 print(mpi.comm.size())
 
@@ -37,7 +44,7 @@ getScore <- function() {
   done <- 0 
   print("started")
   library(Biostrings)
-  source("C:/CRISPr/ThermusToPhage/scripts/r_mpi_helper.R")
+  source("./r_mpi_helper.R")
   
   while (done != 1) {
     # Signal being ready to receive a new task 
@@ -50,6 +57,7 @@ getScore <- function() {
     
     if (tag == 1) 
     {
+      print(paste("Task started: ", task))
       Result = GetScore(task, AllSpacers)
       mpi.send.Robj(Result,0,2)      
     }    
