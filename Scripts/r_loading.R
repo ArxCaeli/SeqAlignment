@@ -24,15 +24,23 @@ source("./r_mpi_helper.R")
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Spacers/"
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/MiniSpacers/"
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Clusters/Slon/"
-DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/Slon2"
+DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/Slon3/"
+LeadersDataFolder = "C:/CRISPr/ThermusToPhage/data/leaders/" # for debug
+
 
 PhageFolder = "c:/CRISPr/ThermusToPhage/data/phages/"
 
 Phages = list.files(PhageFolder, pattern="*.f*", full.names=TRUE)
 Samples = list.files(DataFolder, full.names=TRUE, recursive = F)#T)
 
+#Samples
+
 PhageNames = list.files(PhageFolder, pattern="*.f*", full.names=F)
 SampleNames = list.files(DataFolder, full.names=F, recursive = T)
+
+#Samples = append(Samples, list.files(LeadersDataFolder, full.names=TRUE, recursive = F))
+#SampleNames = append(SampleNames, list.files(LeadersDataFolder, full.names=F, recursive = T))
+
 
 AllSpacers = c()
 for (i in 1:length(Samples)) 
@@ -40,12 +48,12 @@ for (i in 1:length(Samples))
   AllSpacers = c(AllSpacers, readDNAStringSet(Samples[i]))  
 }
 
-Score = 29
+Score = 0
 tasks = GenerateTasksForFastMatching(Samples, Score)
 
 # Rows = c(1:9, 11:13)
 # Cols = c(10, 14)
 # tasks = GenerateParticularTasksForFastMatching(Score, Rows, Cols)
 
-HitMatrix = matrix(ncol = length(Samples), nrow = length(Samples))
+ResultObject = matrix(ncol = length(Samples), nrow = length(Samples))
 

@@ -99,12 +99,12 @@ GetTotalScore = function(task, AllSpacers)
   OtherSampleSpacers = AllSpacers[[task$OtherSampleNumber]]
   AlignmentScoreBoundary = task$AlignmentScore
   
-  MismatchScore = length(SampleSpacers[[1]]) - AlignmentScoreBoundary
+  MismatchScore = AlignmentScoreBoundary#length(SampleSpacers[[1]]) - AlignmentScoreBoundary
   
   print(paste("Task started: mismatchscore", MismatchScore))
-  Score = sum(vcountPDict(SampleSpacers, OtherSampleSpacers, with.indels = T, collapse = 1, max.mismatch = MismatchScore))
+  Score = sum(vcountPDict(SampleSpacers, OtherSampleSpacers, with.indels = F, collapse = 1, max.mismatch = MismatchScore))
   
-  Result <- list(result = Score, SampleNumber = task$SampleNumber, OtherSampleNumber = task$OtherSampleNumber)
+  return = list(result = Score, SampleNumber = task$SampleNumber, OtherSampleNumber = task$OtherSampleNumber)
 }
 
 SaveResults = function(HitMatrix, SampleNames)
