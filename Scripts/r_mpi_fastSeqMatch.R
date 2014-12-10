@@ -119,7 +119,7 @@ while (closed_slaves < n_slaves)
     # The message contains results. Do something with the results. 
     # Store them in the data structure
     print(paste(message$SampleNumber, message$OtherSampleNumber))
-    HitMatrix[message$SampleNumber, message$OtherSampleNumber] = message$result
+    ResultObject = UpdateResults(ResultObject, message)    
   } 
   else if (tag == 3) { 
     # A slave has closed down. 
@@ -127,7 +127,7 @@ while (closed_slaves < n_slaves)
   }   
 }
 
-SaveResults(HitMatrix, SampleNames)
+SaveResults(ResultObject, SampleNames)
 
 mpi.close.Rslaves()
 mpi.quit(save="no")

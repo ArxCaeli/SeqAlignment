@@ -115,3 +115,14 @@ SaveResults = function(HitMatrix, SampleNames)
   ResDf = as.data.frame(HitMatrix)
   write.table(ResDf,file = "c:/CRISPr/ThermusToPhage/data/res_score_sampleVSsample.txt")   
 }
+
+UpdateResults = function(ResultObj, message)
+{
+  return = UpdateHitMatrix(ResultObj, message)
+}
+
+UpdateHitMatrix = function(HitMatrix, message)
+{
+  HitMatrix[message$SampleNumber, message$OtherSampleNumber] = message$result
+  return = HitMatrix
+}

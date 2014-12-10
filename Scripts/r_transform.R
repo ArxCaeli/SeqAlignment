@@ -53,7 +53,7 @@ for(i in 1:length(Samples))
 #to fasta
 DataFolder = "E:/downloads/data14/resAll/"
 DataFolder = "E:/downloads/clustersFiltered/resFiltered"
-NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/extra/Slon2"
+NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/extra/Slon3"
 
 Samples = list.files(DataFolder, full.names=TRUE, recursive = T)
 
@@ -67,6 +67,14 @@ for(i in 1:length(Samples))
   Spacers = read.csv(Samples[i])
   Table = table(Spacers)
   SpacersDF = as.data.frame(Table) 
-    
-  writeFasta(DNAStringSet(SpacersDF$Spacers), file = paste(NewSamplesFolder, sep = "/", basename(Samples[i])))
+  
+  Parts = 5
+  SampleSize = nrow(SpacersDF) / Parts
+  for (j in 1:Parts)
+  {
+    RowsNos = sample(1:nrow(SpacersDF), SampleSize, replace = F)
+    SpacersSet = DNAStringSet(SpacersDF[RowsNos,]$Spacers)
+    SpacersDF = SpacersDF[-RowsNos,]
+    writeFasta(SpacersSet, file = paste(NewSamplesFolder, sep = "/", paste(j, basename(Samples[i]), sep = "_")))
+  }
 }

@@ -43,6 +43,9 @@ for (i in 1:length(Samples))
 Score = 29
 tasks = GenerateTasksForFastMatching(Samples, Score)
 
+# Rows = c(1:9, 11:13)
+# Cols = c(10, 14)
+# tasks = GenerateParticularTasksForFastMatching(Score, Rows, Cols)
 
 HitMatrix = matrix(ncol = length(Samples), nrow = length(Samples))
 
