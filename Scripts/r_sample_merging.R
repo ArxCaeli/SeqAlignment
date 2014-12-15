@@ -312,3 +312,51 @@ SampleNames
 rownames(AlignmentScoresMatrix) = SampleNames
 colnames(AlignmentScoresMatrix) = rownames(AlignmentScoresMatrix)
 
+Sep = AlignmentScoresMatrix[c(1:3, 4:13, 14:16, 17:28, 30:35), c(1:3, 4:13, 14:16, 17:28, 30:35)]
+AlignmentScoresMatrix = Sep
+
+ETNA 9
+ETNA 12
+VESUVIO mud 2012
+VESUVIO mud 2014
+VESUVIO water 2014
+CHILE 3
+CHILE 4
+
+MergedScores = matrix(nrow = 7, ncol = 7)
+MergedSource = colSums(AlignmentScoresMatrix[1:3,])
+MergedSource
+MergedScores[1,] = c(sum(MergedSource[1:3]), sum(MergedSource[4:9]), sum(MergedSource[10:13]), sum(MergedSource[14:16]),
+                     sum(MergedSource[17:22]), sum(MergedSource[23:28]), sum(MergedSource[30:35]))
+MergedScores
+
+MergedSource = colSums(AlignmentScoresMatrix[4:9,])
+MergedScores[2,] = c(sum(MergedSource[1:3]), sum(MergedSource[4:9]), sum(MergedSource[10:13]), sum(MergedSource[14:16]),
+                     sum(MergedSource[17:22]), sum(MergedSource[23:28]), sum(MergedSource[30:35]))
+
+MergedSource = colSums(AlignmentScoresMatrix[10:13,])
+MergedScores[3,] = c(sum(MergedSource[1:3]), sum(MergedSource[4:9]), sum(MergedSource[10:13]), sum(MergedSource[14:16]),
+                     sum(MergedSource[17:22]), sum(MergedSource[23:28]), sum(MergedSource[30:35]))
+
+MergedSource = colSums(AlignmentScoresMatrix[14:16,])
+MergedScores[4,] = c(sum(MergedSource[1:3]), sum(MergedSource[4:9]), sum(MergedSource[10:13]), sum(MergedSource[14:16]),
+                     sum(MergedSource[17:22]), sum(MergedSource[23:28]), sum(MergedSource[30:35]))
+
+MergedSource = colSums(AlignmentScoresMatrix[17:22,])
+MergedScores[5,] = c(sum(MergedSource[1:3]), sum(MergedSource[4:9]), sum(MergedSource[10:13]), sum(MergedSource[14:16]),
+                     sum(MergedSource[17:22]), sum(MergedSource[23:28]), sum(MergedSource[30:35]))
+
+MergedSource = colSums(AlignmentScoresMatrix[23:28,])
+MergedScores[6,] = c(sum(MergedSource[1:3]), sum(MergedSource[4:9]), sum(MergedSource[10:13]), sum(MergedSource[14:16]),
+                     sum(MergedSource[17:22]), sum(MergedSource[23:28]), sum(MergedSource[30:35]))
+
+MergedSource = colSums(AlignmentScoresMatrix[30:35,])
+MergedScores[7,] = c(sum(MergedSource[1:3]), sum(MergedSource[4:9]), sum(MergedSource[10:13]), sum(MergedSource[14:16]),
+                     sum(MergedSource[17:22]), sum(MergedSource[23:28]), sum(MergedSource[30:35]))
+
+MergedScores
+
+rownames(MergedScores) = c("ETNA 12", "CHILE 3", "CHILE 4", "ETNA 9", "VESUVIO mud 2012", "VESUVIO mud 2014", "VESUVIO water 2014")
+colnames(MergedScores) = rownames(MergedScores)
+                           
+AlignmentScoresMatrix = MergedScores

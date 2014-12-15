@@ -4,7 +4,7 @@ library(gplots)
 library(ggplot2)
 library(RColorBrewer);
 
-AlignmentScores = read.table("c:/CRISPr/ThermusToPhage/data/res_score_sampleVSsample.txt")
+AlignmentScores = read.table("c:/CRISPr/ThermusToPhage/data/res_score_sampleVSsample_29_separated.txt")
 AlignmentScoresMatrix = data.matrix(AlignmentScores)
 
 
@@ -14,6 +14,7 @@ diag(AlignmentScoresMatrix) = 0
 diag(AlignmentScoresMatrix) = max(AlignmentScoresMatrix) * 2
 
 AlignmentScoresMatrix
+rownames(AlignmentScoresMatrix)
 
 Zoomed = log(AlignmentScoresMatrix + 1)
 
@@ -24,7 +25,7 @@ DrawMatrix = Zoomed #
 heatmap.2(DrawMatrix, trace = "none", scale = "none", Rowv = T, symm = T,
           dendrogram = "row", margins=c(16,16), rowsep=1:nrow(DrawMatrix), sepcolor="slategray1",#"gray90",
           col = brewer.pal(9,"Reds"),
-          cexRow = 1,# cexCol = 1,
+          #cexRow = 1, cexCol = 1,
           srtCol=45, offsetCol = -0.8)
           #key = F)# adjCol = c(0.9,1)) #col=my_palette
 
