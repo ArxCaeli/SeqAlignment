@@ -20,35 +20,45 @@ source("./r_mpi_helper.R")
 #phage fasta loading
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Clusters/" 
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/MiniCluster/" # for debug
+#DataFolder = "C:/CRISPr/ThermusToPhage/data/ClustersWeightedTest/"
+DataFolder = "C:/CRISPr/ThermusToPhage/data/ClustersWeighted/"
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Test/" 
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Spacers/"
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/MiniSpacers/"
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Clusters/Slon/"
-DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/Slon3/"
-LeadersDataFolder = "C:/CRISPr/ThermusToPhage/data/leaders/" # for debug
+#DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/Slon3/"
+#DataFolder = "C:/CRISPr/ThermusToPhage/data/SummaryClusters/"
+#DataFolder = "C:/CRISPr/ThermusToPhage/data/Spacers/fasta/"
+
+#DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/SlonWeighted/"
+
+#LeadersDataFolder = "C:/CRISPr/ThermusToPhage/data/leaders/"
+LeadersDataFolder = "C:/CRISPr/ThermusToPhage/data/LeadersCsv/"
 
 
-PhageFolder = "c:/CRISPr/ThermusToPhage/data/phages/"
+#PhageFolder = "c:/CRISPr/ThermusToPhage/data/phages/"
 
-Phages = list.files(PhageFolder, pattern="*.f*", full.names=TRUE)
+#Phages = list.files(PhageFolder, pattern="*.f*", full.names=TRUE)
 Samples = list.files(DataFolder, full.names=TRUE, recursive = F)#T)
 
 #Samples
 
-PhageNames = list.files(PhageFolder, pattern="*.f*", full.names=F)
+#PhageNames = list.files(PhageFolder, pattern="*.f*", full.names=F)
 SampleNames = list.files(DataFolder, full.names=F, recursive = T)
 
-#Samples = append(Samples, list.files(LeadersDataFolder, full.names=TRUE, recursive = F))
-#SampleNames = append(SampleNames, list.files(LeadersDataFolder, full.names=F, recursive = T))
+Samples = append(Samples, list.files(LeadersDataFolder, full.names=TRUE, recursive = F))
+SampleNames = append(SampleNames, list.files(LeadersDataFolder, full.names=F, recursive = T))
 
+# 
+# AllSpacers = c()
+# for (i in 1:length(Samples)) 
+# { 
+#   AllSpacers = c(AllSpacers, readDNAStringSet(Samples[i]))  
+# }
 
-AllSpacers = c()
-for (i in 1:length(Samples)) 
-{ 
-  AllSpacers = c(AllSpacers, readDNAStringSet(Samples[i]))  
-}
+AllSpacers = loadWeightedSpacers(Samples)
 
-Score = 0
+Score = 3
 tasks = GenerateTasksForFastMatching(Samples, Score)
 
 # Rows = c(1:9, 11:13)

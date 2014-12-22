@@ -88,7 +88,8 @@ GenerateEmptyMatricies = function(RowsQty, ColsQty, ScoreStart, ScoreEnd)
 
 GetScore = function(task, AllSpacers)
 {
-  return = GetTotalScore(task, AllSpacers)
+  #return = GetTotalScore(task, AllSpacers)
+  return = GetTotalWeightedScore(task, AllSpacers)
 }
 
 GetTotalScore = function(task, AllSpacers)
@@ -102,9 +103,29 @@ GetTotalScore = function(task, AllSpacers)
   MismatchScore = AlignmentScoreBoundary#length(SampleSpacers[[1]]) - AlignmentScoreBoundary
   
   print(paste("Task started: mismatchscore", MismatchScore))
-  Score = sum(vcountPDict(SampleSpacers, OtherSampleSpacers, with.indels = F, collapse = 1, max.mismatch = MismatchScore))
+  Score = sum(vcountPDict(SampleSpacers, OtherSampleSpacers, with.indels = T, collapse = 1, max.mismatch = MismatchScore))
   
   return = list(result = Score, SampleNumber = task$SampleNumber, OtherSampleNumber = task$OtherSampleNumber)
+}
+
+GetTotalWeightedScore = function(task, AllSpacers)
+{
+  print(paste(task$SampleNumber, task$OtherSampleNumber, "Task Received"))
+  
+  SampleSpacers = AllSpacers[[task$SampleNumber]]
+  OtherSampleSpacers = AllSpacers[[task$OtherSampleNumber]]
+  MismatchScore = task$AlignmentScore
+  
+  print(paste("Task started: mismatchscore", MismatchScore))
+  ScoreMatrix = vcountPDict(
+    DNAStringSet(SampleSpacers$Spacers), DNAStringSet(OtherSampleSpacers$Spacers),
+    with.indels = T, collapse = F, max.mismatch = MismatchScore)
+  ScoreMatrix[ScoreMatrix != 0] = 1
+  
+  ScoreMatrix = ScoreMatrix * SampleSpacers$Qty
+  ScoreMatrix = t(t(ScoreMatrix) * OtherSampleSpacers$Qty)
+    
+  return = list(result = sum(ScoreMatrix), SampleNumber = task$SampleNumber, OtherSampleNumber = task$OtherSampleNumber)
 }
 
 SaveResults = function(HitMatrix, SampleNames)
@@ -125,4 +146,22 @@ UpdateHitMatrix = function(HitMatrix, message)
 {
   HitMatrix[message$SampleNumber, message$OtherSampleNumber] = message$result
   return = HitMatrix
+}
+
+
+loadWeightedSpacers = function(Samples)
+{  
+  AllSpacers = List()
+  for (i in 1:length(Samples)) 
+  { 
+    if (file.info(Samples[i])$size < 10)
+      next
+    
+    Spacers = read.csv(Samples[i], sep = ";", header = F)
+    names(Spacers) = c("Spacers", "Qty")
+    
+    AllSpacers[[i]] = Spacers  
+  }
+  
+  return = AllSpacers
 }

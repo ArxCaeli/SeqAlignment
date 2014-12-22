@@ -256,14 +256,14 @@ SampleNames = c(
   "ETNA 12/ III spacers",
   "CHILE 3/ 2-5 spacers",
   "CHILE 3/ I-A spacers",
-  "CHILE 3/ ccb spacers",  
+  "CHILE 3/ CCB spacers",  
   "CHILE 3/ I-E spacers",
   "CHILE 3/ I-C spacers",
   "CHILE 3/ I-U spacers",
   "CHILE 4/ 2-5 spacers",
-  "CHILE 4/ ccb spacers",
+  "CHILE 4/ CCB spacers",
   "CHILЕ 4/ I-E spacers",
-  "CHILE 4/ I-C sspacers",
+  "CHILE 4/ I-C spacers",
   "ETNA 9/ hybr spacers",
   "ETNA 9/ I-E spacers",
   "ETNA 9/ III_spacers",
@@ -271,21 +271,21 @@ SampleNames = c(
   "VESUVIO mud*/ I-E spacers",
   "VESUVIO mud*/ I-C spacers",
   "VESUVIO mud*/ III spacers",
-  "VESUVIO mud*/ scot spacers",
+  "VESUVIO mud*/ Unknown SA spacers",
   "VESUVIO mud*/ I-U spacers",
-  "VESUVIO mud/ hybr spacers",
-  "VESUVIO mud/ I-E spacers",
-  "VESUVIO mud/ I-C spacers",
-  "VESUVIO mud/ III spacers",
-  "VESUVIO mud/ scot spacers",
-  "VESUVIO mud/ I-U spacers",
+  "VESUVIO 1/ hybr spacers",
+  "VESUVIO 1/ I-E spacers",
+  "VESUVIO 1/ I-C spacers",
+  "VESUVIO 1/ III spacers",
+  "VESUVIO 1/ SA spacers",
+  "VESUVIO 1/ I-U spacers",
   "Random spacers",
-  "VESUVIO water/ hybr spacers",
-  "VESUVIO water/ I-E spacers",
-  "VESUVIO water/ I-C spacers",
-  "VESUVIO water/ III spacers",
-  "VESUVIO water/ scot spacers",
-  "VESUVIO water/ I-U spacers",
+  "VESUVIO 2/ Hybr spacers",
+  "VESUVIO 2/ I-E spacers",
+  "VESUVIO 2/ I-C spacers",
+  "VESUVIO 2/ III spacers",
+  "VESUVIO 2/ SA spacers",
+  "VESUVIO 2/ I-U spacers",
   "Unknown 2_5 system repeats",
   "Unknown CCB system repeats",
   "Hybrid repeats",
@@ -293,18 +293,19 @@ SampleNames = c(
   "I-C repeats",      
   "I-E repeats",      
   "III repeats",    
-  "Scotoductus repeats",     
-  "SGO repeats",
-  "Hybrid leader",
-  "I-A leader",      
-  "I-B leader",
-  "I-C leader",      
-  "I-E leader",
-  "I-U leader",
-  "III leader",    
-  "Unknown 2_5 system leader",
-  "Unknown CCB system leader",
-  "Scotoductus leader")
+  "Unknown SA repeats",     
+  "I-U repeats",
+  "Hybrid leaders",
+  "I-A leaders",      
+  "I-B leaders",
+  "I-C leaders",      
+  "I-E leaders",
+  "I-U leaders",
+  "III leaders",    
+  "Unknown 2_5 system leaders",
+  "Unknown CCB system leaders",
+  "Unknown SA system leaders")
+
 
 MatRowNames = rownames(AlignmentScoresMatrix) 
 MatRowNames
@@ -313,6 +314,9 @@ rownames(AlignmentScoresMatrix) = SampleNames
 colnames(AlignmentScoresMatrix) = rownames(AlignmentScoresMatrix)
 
 Sep = AlignmentScoresMatrix[c(1:3, 4:13, 14:16, 17:28, 30:35), c(1:3, 4:13, 14:16, 17:28, 30:35)]
+Sep = AlignmentScoresMatrix[-c(2, 17:22), -c(2, 17:22)]
+Sep = AlignmentScoresMatrix[-c(2, 17:22, 29, 36:54), -c(2, 17:22, 29, 36:54)]
+
 AlignmentScoresMatrix = Sep
 
 ETNA 9

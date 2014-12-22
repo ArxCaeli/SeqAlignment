@@ -13,6 +13,7 @@ AlignmentScoresMatrix = AlignmentScoresMatrix + t(AlignmentScoresMatrix)
 diag(AlignmentScoresMatrix) = 0
 diag(AlignmentScoresMatrix) = max(AlignmentScoresMatrix) * 2
 
+
 AlignmentScoresMatrix
 rownames(AlignmentScoresMatrix)
 
@@ -30,6 +31,8 @@ heatmap.2(DrawMatrix, trace = "none", scale = "none", Rowv = T, symm = T,
           #key = F)# adjCol = c(0.9,1)) #col=my_palette
 
 
+AlignmentScoresMatrix = AlignmentScoresMatrix[-c(17:28, 32), -c(17:28, 32)]
+AlignmentScoresMatrix = AlignmentScoresMatrix[-c(17, 23:41), -c(17, 23:41)]
 
 #norm by qty
 for (i in 1:(length(Samples)-1)) 
@@ -43,6 +46,14 @@ for (i in 1:(length(Samples)-1))
     }
   }  
 }
+
+rownames(AlignmentScoresMatrix)
+rownames(AlignmentScoresMatrix) = strsplit(rownames(AlignmentScoresMatrix), "\\.")[[1]]
+split = function(str) strsplit(str, "\\.")[[1]][1]
+names = sapply(rownames(AlignmentScoresMatrix), split)
+rownames(AlignmentScoresMatrix) = names
+colnames(AlignmentScoresMatrix) = rownames(AlignmentScoresMatrix)
+
 
 
 #isa stuff

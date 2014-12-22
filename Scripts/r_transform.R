@@ -9,12 +9,6 @@ NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/Spacers/"
 
 
 Samples = list.files(DataFolder, full.names=TRUE, recursive = T)
-Samples
-Spacers = readDNAStringSet(Samples[1])
-Spacers
-Table = table(Spacers)
-SpacersDF = as.data.frame(Table) 
-head(SpacersDF$Spacers)
 
 #for fasta
 for(i in 1:length(Samples))
@@ -77,4 +71,82 @@ for(i in 1:length(Samples))
     SpacersDF = SpacersDF[-RowsNos,]
     writeFasta(SpacersSet, file = paste(NewSamplesFolder, sep = "/", paste(j, basename(Samples[i]), sep = "_")))
   }
+}
+
+#to fasta from tables
+DataFolder = "C:/CRISPr/ThermusToPhage/data/spacers/"
+NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/spacers/fasta/"
+
+Samples = list.files(DataFolder, full.names=TRUE, recursive = T)
+
+for(i in 1:length(Samples))
+{
+  if (file.info(Samples[i])$size == 0)
+    next
+  
+  SpacersDF = read.table(Samples[i])
+  SpacersSet = DNAStringSet(SpacersDF$Spacers)
+  writeFasta(SpacersSet, file = paste(NewSamplesFolder, sep = "/", basename(Samples[i])))  
+}
+
+temp = read.table(Samples[1])
+temp[1,]
+
+
+
+# #for weighted clusters
+# DataFolder = "C:/CRISPr/ThermusToPhage/data/ClustersWeighted/"
+# NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/ClustersWeighted/fasta"
+# 
+# Samples = list.files(DataFolder, full.names=TRUE, recursive = T)
+# 
+# Spacers = read.csv(Samples[1], sep = ";")
+# names(Spacers) = c("Spacers", "Qty")
+# Spacers[1,]
+# Table = table(Spacers)
+# SpacersDF = as.data.frame(Table) 
+# 
+# 
+# SpacersDF[,1]
+# 
+# for(i in 1:length(Samples))
+# {
+#   if (file.info(Samples[i])$size == 0)
+#     next
+#   
+#   Spacers = read.csv(Samples[i])
+#   Table = table(Spacers)
+#   SpacersDF = as.data.frame(Table) 
+#   
+#   SpacersDF = read.table(Samples[i])
+#   SpacersSet = DNAStringSet(SpacersDF$Spacers)
+#   writeFasta(SpacersSet, file = paste(NewSamplesFolder, sep = "/", basename(Samples[i])))  
+# }
+# 
+# temp = read.table(Samples[1])
+# temp[1,]
+# 
+# 
+
+LeadersDataFolder = "C:/CRISPr/ThermusToPhage/data/leaders/"
+NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/LeadersCsv/"
+Samples = list.files(LeadersDataFolder, full.names=TRUE, recursive = T)
+
+Fasta = readDNAStringSet(Samples[1])
+class(Fasta)
+as.character(Fasta)
+
+FastaSet = data.frame(as.character(Fasta))
+FastaSet$Qty = 1
+FastaSet
+
+for(i in 1:length(Samples))
+{
+  if (file.info(Samples[i])$size == 0)
+    next
+
+  Fasta = readDNAStringSet(Samples[i])
+  FastaSet = data.frame(as.character(Fasta))
+  FastaSet$Qty = 1
+  write.table(FastaSet, file = paste(NewSamplesFolder, sep = "/", basename(Samples[i])), col.names = F, row.names = F, sep = ";")
 }
