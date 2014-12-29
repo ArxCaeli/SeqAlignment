@@ -149,19 +149,23 @@ UpdateHitMatrix = function(HitMatrix, message)
 }
 
 
-loadWeightedSpacers = function(Samples)
+loadWeightedSpacers = function(Samples, NormTargetVector)
 {  
   AllSpacers = List()
+
   for (i in 1:length(Samples)) 
-  { 
-    if (file.info(Samples[i])$size < 10)
-      next
-    
+  {
+    # commented because not supported
+    # if (file.info(Samples[i])$size < 10)
+    #   next
+
     Spacers = read.csv(Samples[i], sep = ";", header = F)
     names(Spacers) = c("Spacers", "Qty")
     
+    Spacers$Qty = as.vector(normalize.quantiles.use.target(as.matrix(Spacers$Qty), NormTargetVector))
+    
     AllSpacers[[i]] = Spacers  
   }
-  
+    
   return = AllSpacers
 }

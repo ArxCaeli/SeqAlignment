@@ -3,13 +3,11 @@
 library(Biostrings)
 library(ShortRead)
 
-DataFolder = "E:/downloads/documents-export-2014-10-26/"
-
-NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/Spacers/"
-
+DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/spacers/"
+NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/extra/spacers_tables"
 
 Samples = list.files(DataFolder, full.names=TRUE, recursive = T)
-
+i = 1
 #for fasta
 for(i in 1:length(Samples))
 {
@@ -24,7 +22,23 @@ for(i in 1:length(Samples))
   Spacers = readDNAStringSet(Samples[i])
   Table = table(Spacers)
   SpacersDF = as.data.frame(Table) 
-  write.table(SpacersDF, file = paste(NewSamplesFolder, sep = "/", basename(Samples[i])))
+  SpacersDF = SpacersDF[SpacersDF$Freq > 1,]
+  SpacersDF$Spacers = as.character(SpacersDF$Spacers)
+  SpacersDF = SpacersDF[!grepl("N", SpacersDF$Spacers),]
+  
+  #to do: write fasta due to different distributions 
+  Parts = 3
+  SampleSize = nrow(SpacersDF) / Parts
+  for (j in 1:Parts)
+  {
+    RowsNos = c(1 : SampleSize) 
+    SpacersSet = SpacersDF[RowsNos,]
+    SpacersDF = SpacersDF[-RowsNos,]
+    write.table(SpacersSet, 
+                file = paste(NewSamplesFolder, sep = "/", paste(basename(Samples[i]), j, sep = "_")),
+                col.names = F, row.names = F,
+                sep = ";", quote = F)
+  }  
 }
 
 #for nonfasta

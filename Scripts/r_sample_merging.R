@@ -364,3 +364,83 @@ rownames(MergedScores) = c("ETNA 12", "CHILE 3", "CHILE 4", "ETNA 9", "VESUVIO m
 colnames(MergedScores) = rownames(MergedScores)
                            
 AlignmentScoresMatrix = MergedScores
+
+
+MergedScores = matrix(nrow = 12, ncol = 12)
+rownames(MergedScores) = c("Cat 1", "Cat 2", "Cat 3", "Mammoth 1", "Mammoth 2", "Mammoth 3", "SB 1", "SB 2", "SB 3", "SO 1", "SO 2", "SO 3")
+colnames(MergedScores) = rownames(MergedScores)
+
+
+MergedSource = colSums(AlignmentScoresMatrix[1:18,])
+MergedScores[1,] = c(sum(MergedSource[1:18]), sum(MergedSource[19:33]), sum(MergedSource[34:48]), 
+                     sum(MergedSource[49:51]), sum(MergedSource[52:54]), sum(MergedSource[55:57]),
+                     sum(MergedSource[58:60]), sum(MergedSource[61:63]), sum(MergedSource[64:66]),
+                     sum(MergedSource[67:69]), sum(MergedSource[70:72]), sum(MergedSource[73:75]))
+
+MergedSource = colSums(AlignmentScoresMatrix[19:33,])
+MergedScores[2,] = c(sum(MergedSource[1:18]), sum(MergedSource[19:33]), sum(MergedSource[34:48]), 
+                     sum(MergedSource[49:51]), sum(MergedSource[52:54]), sum(MergedSource[55:57]),
+                     sum(MergedSource[58:60]), sum(MergedSource[61:63]), sum(MergedSource[64:66]),
+                     sum(MergedSource[67:69]), sum(MergedSource[70:72]), sum(MergedSource[73:75]))
+
+MergedSource = colSums(AlignmentScoresMatrix[34:48,])
+MergedScores[3,] = c(sum(MergedSource[1:18]), sum(MergedSource[19:33]), sum(MergedSource[34:48]), 
+                     sum(MergedSource[49:51]), sum(MergedSource[52:54]), sum(MergedSource[55:57]),
+                     sum(MergedSource[58:60]), sum(MergedSource[61:63]), sum(MergedSource[64:66]),
+                     sum(MergedSource[67:69]), sum(MergedSource[70:72]), sum(MergedSource[73:75]))
+
+MergedSource = colSums(AlignmentScoresMatrix[49:51,])
+MergedScores[4,] = c(sum(MergedSource[1:18]), sum(MergedSource[19:33]), sum(MergedSource[34:48]), 
+                     sum(MergedSource[49:51]), sum(MergedSource[52:54]), sum(MergedSource[55:57]),
+                     sum(MergedSource[58:60]), sum(MergedSource[61:63]), sum(MergedSource[64:66]),
+                     sum(MergedSource[67:69]), sum(MergedSource[70:72]), sum(MergedSource[73:75]))
+
+MergedSource = colSums(AlignmentScoresMatrix[52:54,])
+MergedScores[5,] = c(sum(MergedSource[1:18]), sum(MergedSource[19:33]), sum(MergedSource[34:48]), 
+                     sum(MergedSource[49:51]), sum(MergedSource[52:54]), sum(MergedSource[55:57]),
+                     sum(MergedSource[58:60]), sum(MergedSource[61:63]), sum(MergedSource[64:66]),
+                     sum(MergedSource[67:69]), sum(MergedSource[70:72]), sum(MergedSource[73:75]))
+
+MergedSource = colSums(AlignmentScoresMatrix[55:57,])
+MergedScores[6,] = c(sum(MergedSource[1:18]), sum(MergedSource[19:33]), sum(MergedSource[34:48]), 
+                     sum(MergedSource[49:51]), sum(MergedSource[52:54]), sum(MergedSource[55:57]),
+                     sum(MergedSource[58:60]), sum(MergedSource[61:63]), sum(MergedSource[64:66]),
+                     sum(MergedSource[67:69]), sum(MergedSource[70:72]), sum(MergedSource[73:75]))
+
+MergedSource = colSums(AlignmentScoresMatrix[58:60,])
+MergedScores[7,] = c(sum(MergedSource[1:18]), sum(MergedSource[19:33]), sum(MergedSource[34:48]), 
+                     sum(MergedSource[49:51]), sum(MergedSource[52:54]), sum(MergedSource[55:57]),
+                     sum(MergedSource[58:60]), sum(MergedSource[61:63]), sum(MergedSource[64:66]),
+                     sum(MergedSource[67:69]), sum(MergedSource[70:72]), sum(MergedSource[73:75]))
+
+MergedSource = colSums(AlignmentScoresMatrix[61:63,])
+MergedScores[8,] = c(sum(MergedSource[1:18]), sum(MergedSource[19:33]), sum(MergedSource[34:48]), 
+                     sum(MergedSource[49:51]), sum(MergedSource[52:54]), sum(MergedSource[55:57]),
+                     sum(MergedSource[58:60]), sum(MergedSource[61:63]), sum(MergedSource[64:66]),
+                     sum(MergedSource[67:69]), sum(MergedSource[70:72]), sum(MergedSource[73:75]))
+
+MergedSource = colSums(AlignmentScoresMatrix[64:66,])
+MergedScores[9,] = c(sum(MergedSource[1:18]), sum(MergedSource[19:33]), sum(MergedSource[34:48]), 
+                     sum(MergedSource[49:51]), sum(MergedSource[52:54]), sum(MergedSource[55:57]),
+                     sum(MergedSource[58:60]), sum(MergedSource[61:63]), sum(MergedSource[64:66]),
+                     sum(MergedSource[67:69]), sum(MergedSource[70:72]), sum(MergedSource[73:75]))
+
+MergedSource = colSums(AlignmentScoresMatrix[67:69,])
+MergedScores[10,] = c(sum(MergedSource[1:18]), sum(MergedSource[19:33]), sum(MergedSource[34:48]), 
+                     sum(MergedSource[49:51]), sum(MergedSource[52:54]), sum(MergedSource[55:57]),
+                     sum(MergedSource[58:60]), sum(MergedSource[61:63]), sum(MergedSource[64:66]),
+                     sum(MergedSource[67:69]), sum(MergedSource[70:72]), sum(MergedSource[73:75]))
+
+MergedSource = colSums(AlignmentScoresMatrix[70:72,])
+MergedScores[11,] = c(sum(MergedSource[1:18]), sum(MergedSource[19:33]), sum(MergedSource[34:48]), 
+                     sum(MergedSource[49:51]), sum(MergedSource[52:54]), sum(MergedSource[55:57]),
+                     sum(MergedSource[58:60]), sum(MergedSource[61:63]), sum(MergedSource[64:66]),
+                     sum(MergedSource[67:69]), sum(MergedSource[70:72]), sum(MergedSource[73:75]))
+
+MergedSource = colSums(AlignmentScoresMatrix[73:75,])
+MergedScores[12,] = c(sum(MergedSource[1:18]), sum(MergedSource[19:33]), sum(MergedSource[34:48]), 
+                     sum(MergedSource[49:51]), sum(MergedSource[52:54]), sum(MergedSource[55:57]),
+                     sum(MergedSource[58:60]), sum(MergedSource[61:63]), sum(MergedSource[64:66]),
+                     sum(MergedSource[67:69]), sum(MergedSource[70:72]), sum(MergedSource[73:75]))
+MergedScores
+AlignmentScoresMatrix = MergedScores
