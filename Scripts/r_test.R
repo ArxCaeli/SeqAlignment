@@ -41,15 +41,6 @@ for (j in 1:nrow(AllPhages))
 }
 
 
-mat <- nucleotideSubstitutionMatrix(match = 1, mismatch = -1, baseOnly = TRUE)
-AllPhages[1,]
-PhageNames
-
-pairwiseAlignment(SampleSpacers[1,]$Spacers, AllPhages[9,]$Phage, scoreOnly = T, type = "local", substitutionMatrix = mat)
-pairwiseAlignment(SampleSpacers[4,]$Spacers, AllPhages[9,]$Phage, scoreOnly = F, type = "local", substitutionMatrix = mat)
-
-getMethod(pairwiseAlignment)
-
 
 AlignmentScores = read.table("c:/CRISPr/ThermusToPhage/data/res.txt")
 AlignmentScoresMatrix = data.matrix(AlignmentScores)
@@ -72,88 +63,19 @@ library(ShortRead)
 writeFasta(Spacers, "c:/CRISPr/ThermusToPhage/data/Clusters/random_spacers.fasta")
 
 
-
-AllSpacers = data.frame()
-
-SampleNames[13]
-SampleNames[27]
-SampleNames
-
-Spacers = readDNAStringSet(Samples[13])
-VSSpacers = readDNAStringSet(Samples[27])
-
-
-Samples[1]
-Samples[4]
-Spacers = readDNAStringSet(Samples[1]) #mismatch
-Target = readDNAStringSet(Samples[4])
-
-Match = vcountPDict(Spacers, Target, with.indels = T, collapse = 0, max.mismatch = 8)
-Match = matchPDict(Spacers, Target[[1]], with.indels = T, max.mismatch = 8)
-
-Match
-sum(Match)
-
-startIndex(Match)
-Match
-
-Spacers = read.table("C:/CRISPr/ThermusToPhage/data/Spacers/12_good_1.fasta")
-Spacers
-
-AllSpacers = c()
-
-Samples[1]
-
-for (i in 1:length(Samples)) 
-{ 
-  Sample = read.table(Samples[i])
-  Sample = Sample[nchar(as.character(Sample$Spacers)) >= 32,]
-  AllSpacers = c(AllSpacers, list(SampleSpacers = DNAStringSet(Sample$Spacers), Quantity = Sample$Freq))  
-}
-
-Sample = read.table(Samples[1])
-nrow(Sample)
-Sample = Sample[nchar(as.character(Sample$Spacers)) >= 32,]
-
-
-AllSpacers[[3]]
-
-SampleNumber = 1
-OtherSampleNumber = 2
-
-SampleSpacers[4]
-OtherSampleSpacers[1]
-SampleSpacers = AllSpacers[[SampleNumber * 2 - 1]]
-SampleSpacersQuantity = AllSpacers[[SampleNumber * 2]]
-OtherSampleSpacers = AllSpacers[[OtherSampleNumber * 2 - 1]]
-OtherSampleSpacersQuantity = AllSpacers[[OtherSampleNumber * 2]]
-AlignmentScoreBoundary = 28
-
-MismatchScore = 32 - AlignmentScoreBoundary
-
-print(paste("Task started: mismatchscore", MismatchScore))
-
-MatchMatrix = matrix(nrow = length(SampleSpacers), ncol = length(OtherSampleSpacers))
-MatchMatrix = vcountPDict(SampleSpacers, OtherSampleSpacers, with.indels = T, collapse = F, max.mismatch = MismatchScore)
-
-as.character(SampleSpacers[1])
-
-for (i in 1:length(SampleSpacers))
-  SampleSpacers[i] = strtrim(as.character(SampleSpacers[i]), 32)
-
-SampleSpacers
-
-SampleSpacers[1]
-= strtrim(as.character(SampleSpacers))
-
-for (i in 1:length(OtherSampleSpacers))
-  MatchMatrix[,i] = vcountPDict(SampleSpacers, OtherSampleSpacers[i], with.indels = T, collapse = F, max.mismatch = MismatchScore)
-
-MatchMatrix
-Score = sum(MatchMatrix)
-
 vcountPDict(
   DNAStringSet(c("GAGCCTGGCCGAGA","AAGAGCCTGGCCGAGAGCAAGCTTTCCGACTCGGACCTG")),
   DNAStringSet(c("GAGCCTGGCCGAGA","GCAAGCTAACCGACTCGGA")),   
   with.indels = T, max.mismatch = 2)
+
+AlignmentScores = read.table("c:/CRISPr/ThermusToPhage/data/res_score_sampleVSsample.txt")
+AlignmentScoresMatrix = data.matrix(AlignmentScores)
+
+res = which(AlignmentScoresMatrix != 0, arr.ind = T)
+res[1,]
+
+
+
+#debug
+task <- list(SampleNumber = 2, OtherSampleNumber = 3, AlignmentScore = Score)  
 

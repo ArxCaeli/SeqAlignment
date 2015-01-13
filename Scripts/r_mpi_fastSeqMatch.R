@@ -119,7 +119,7 @@ while (closed_slaves < n_slaves)
     # The message contains results. Do something with the results. 
     # Store them in the data structure
     print(paste(message$SampleNumber, message$OtherSampleNumber))
-    ResultObject = UpdateResults(ResultObject, message)    
+    ResultObject = UpdateResults(ResultObject, message, AllSpacers)    
   } 
   else if (tag == 3) { 
     # A slave has closed down. 

@@ -32,8 +32,9 @@ library(preprocessCore)
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/SummaryClusters/"
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Spacers/fasta/"
 
-#DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/SlonWeighted/"
-DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/spacers_tables/"
+#DataFolder = "C:/CRISPr/ThermusToPhage/data/MiniWeighted/"
+DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/SlonWeighted/"
+#DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/spacers_tables/"
 
 #LeadersDataFolder = "C:/CRISPr/ThermusToPhage/data/leaders/"
 #LeadersDataFolder = "C:/CRISPr/ThermusToPhage/data/LeadersCsv/"
@@ -47,29 +48,30 @@ Samples = list.files(DataFolder, full.names=TRUE, recursive = F)#T)
 #PhageNames = list.files(PhageFolder, pattern="*.f*", full.names=F)
 SampleNames = list.files(DataFolder, full.names=F, recursive = T)
 
-# Samples = append(Samples, list.files(LeadersDataFolder, full.names=TRUE, recursive = F))
-# SampleNames = append(SampleNames, list.files(LeadersDataFolder, full.names=F, recursive = T))
+#Samples = append(Samples, list.files(LeadersDataFolder, full.names=TRUE, recursive = F))
+#SampleNames = append(SampleNames, list.files(LeadersDataFolder, full.names=F, recursive = T))
 
-# 
 # AllSpacers = c()
 # for (i in 1:length(Samples)) 
 # { 
 #   AllSpacers = c(AllSpacers, readDNAStringSet(Samples[i]))  
 # }
-#Samples[2]
+
 ReferenceSpacers = read.csv(Samples[1], sep = ";", header = F)
 names(ReferenceSpacers) = c("Spacers", "Qty")
 NormTargetVector = ReferenceSpacers$Qty
 
 AllSpacers = loadWeightedSpacers(Samples, NormTargetVector)
 
+ResultObject = makeFullResultObjForWeightedSpacers(AllSpacers, SampleNames)
+
 Score = 3
 tasks = GenerateTasksForFastMatching(Samples, Score)
-
-tasks
+# SampleNames
+# 
 # Rows = c(1:9, 11:13)
 # Cols = c(10, 14)
 # tasks = GenerateParticularTasksForFastMatching(Score, Rows, Cols)
 
-ResultObject = matrix(ncol = length(Samples), nrow = length(Samples))
+#ResultObject = matrix(ncol = length(Samples), nrow = length(Samples))
 

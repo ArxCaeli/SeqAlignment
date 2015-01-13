@@ -4,18 +4,43 @@ library(gplots)
 library(ggplot2)
 library(RColorBrewer);
 
-AlignmentScores = read.table("c:/CRISPr/ThermusToPhage/data/res_score_sampleVSsample.txt")
+AlignmentScores = read.table("c:/CRISPr/ThermusToPhage/data/res_score_sampleVSsample.txt", header = T, row.names = NULL)
 AlignmentScoresMatrix = data.matrix(AlignmentScores)
+AlignmentScoresMatrix = AlignmentScoresMatrix[,-1]
+
+SingleElements = c()
+
+for (i in 1:nrow(AlignmentScoresMatrix))
+{
+  if (sum(AlignmentScoresMatrix[i,]) <= 100)
+  {
+    print(i)
+    SingleElements = append(SingleElements, i)
+  }
+}
+
+SingleElements
+
+AlignmentScoresMatrix = AlignmentScoresMatrix[-SingleElements,]
+
+Loosers = c()
+for (i in 1:nrow(AlignmentScoresMatrix))
+{
+  if (runif(1, 0, 1) <= 0.75)
+  {
+    Loosers = append(Loosers, i)
+  }
+}
+nrow(AlignmentScoresMatrix)
+Loosers
+
+AlignmentScoresMatrix = AlignmentScoresMatrix[-Loosers,]
 
 
 AlignmentScoresMatrix[lower.tri(AlignmentScoresMatrix)] = 0
 AlignmentScoresMatrix = AlignmentScoresMatrix + t(AlignmentScoresMatrix)
 diag(AlignmentScoresMatrix) = 0
 diag(AlignmentScoresMatrix) = max(AlignmentScoresMatrix) * 2
-
-
-AlignmentScoresMatrix
-rownames(AlignmentScoresMatrix)
 
 Zoomed = log(AlignmentScoresMatrix + 1)
 
@@ -30,6 +55,11 @@ heatmap.2(DrawMatrix, trace = "none", scale = "none", Rowv = T, symm = T,
           srtCol=45, offsetCol = -0.8)
           #key = F)# adjCol = c(0.9,1)) #col=my_palette
 
+heatmap.2(DrawMatrix, trace = "none",# scale = "none", 
+          col = brewer.pal(9,"Oranges"),
+          #cexRow = 1, cexCol = 1,
+          srtCol=45, offsetCol = -0.8)
+          #key = F)# adjCol = c(0.9,1)) #col=my_palette
 
 AlignmentScoresMatrix = AlignmentScoresMatrix[-c(17:28, 32), -c(17:28, 32)]
 AlignmentScoresMatrix = AlignmentScoresMatrix[-c(17, 23:41), -c(17, 23:41)]
