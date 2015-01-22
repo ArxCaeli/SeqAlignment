@@ -5,9 +5,12 @@ library(ShortRead)
 
 DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/spacers/"
 NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/extra/spacers_tables"
+DataFolder = "E:/downloads/renamed/"
+NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/spacers_renamed/"
 
 Samples = list.files(DataFolder, full.names=TRUE, recursive = T)
-i = 1
+Samples = Samples[7]
+i = 7
 #for fasta
 for(i in 1:length(Samples))
 {
@@ -22,24 +25,37 @@ for(i in 1:length(Samples))
   Spacers = readDNAStringSet(Samples[i])
   Table = table(Spacers)
   SpacersDF = as.data.frame(Table) 
-  SpacersDF = SpacersDF[SpacersDF$Freq > 1,]
+  #SpacersDF = SpacersDF[SpacersDF$Freq > 1,]
   SpacersDF$Spacers = as.character(SpacersDF$Spacers)
   SpacersDF = SpacersDF[!grepl("N", SpacersDF$Spacers),]
   
-  #to do: write fasta due to different distributions 
-  Parts = 3
-  SampleSize = nrow(SpacersDF) / Parts
-  for (j in 1:Parts)
-  {
-    RowsNos = c(1 : SampleSize) 
-    SpacersSet = SpacersDF[RowsNos,]
-    SpacersDF = SpacersDF[-RowsNos,]
-    write.table(SpacersSet, 
-                file = paste(NewSamplesFolder, sep = "/", paste(basename(Samples[i]), j, sep = "_")),
-                col.names = F, row.names = F,
-                sep = ";", quote = F)
-  }  
+  write.table(SpacersDF, 
+              file = paste(NewSamplesFolder, sep = "/", basename(Samples[i])))
+#   ,
+#               col.names = F, row.names = F,
+#               sep = ";", quote = F)
+#   
+#   #to do: write fasta due to different distributions 
+#   Parts = 3
+#   SampleSize = nrow(SpacersDF) / Parts
+#   for (j in 1:Parts)
+#   {
+#     RowsNos = c(1 : SampleSize) 
+#     SpacersSet = SpacersDF[RowsNos,]
+#     SpacersDF = SpacersDF[-RowsNos,]
+#     write.table(SpacersSet, 
+#                 file = paste(NewSamplesFolder, sep = "/", paste(basename(Samples[i]), j, sep = "_")),
+#                 col.names = F, row.names = F,
+#                 sep = ";", quote = F)
+#   }  
 }
+
+DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/spacers/"
+NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/Spacers/"
+
+Samples = "E:/downloads/qb.fasta" #list.files(DataFolder, full.names=TRUE, recursive = T)
+Samples = list.files(DataFolder, full.names=TRUE, recursive = T)
+
 
 #for nonfasta
 for(i in 1:length(Samples))
@@ -61,6 +77,7 @@ for(i in 1:length(Samples))
 #to fasta
 DataFolder = "E:/downloads/data14/resAll/"
 DataFolder = "E:/downloads/clustersFiltered/resFiltered"
+
 NewSamplesFolder = "C:/CRISPr/ThermusToPhage/data/extra/Slon3"
 
 Samples = list.files(DataFolder, full.names=TRUE, recursive = T)

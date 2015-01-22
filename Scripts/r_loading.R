@@ -33,8 +33,8 @@ library(preprocessCore)
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/Spacers/fasta/"
 
 #DataFolder = "C:/CRISPr/ThermusToPhage/data/MiniWeighted/"
-DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/SlonWeighted/"
-#DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/spacers_tables/"
+#DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/SlonWeighted/"
+DataFolder = "C:/CRISPr/ThermusToPhage/data/extra/spacers_tables/"
 
 #LeadersDataFolder = "C:/CRISPr/ThermusToPhage/data/leaders/"
 #LeadersDataFolder = "C:/CRISPr/ThermusToPhage/data/LeadersCsv/"

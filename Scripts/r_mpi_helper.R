@@ -41,15 +41,15 @@ GenerateTasksForFastMatching = function(Samples, Score)
   tasks <- vector('list')
   n = 1
   
-  for (i in 1:(length(Samples) - 1)) 
+  for (i in 1:length(Samples))#1:(length(Samples) - 1)) 
   {     
-    for (j in (i + 1):length(Samples))
+    for (j in 1:length(Samples))#(i + 1):length(Samples))
     {
-      if (i != j)
-      {
+      #if (i != j)
+      #{
         tasks[[n]] <- list(SampleNumber = i, OtherSampleNumber = j, AlignmentScore = Score)  
         n = n + 1
-      }
+      #}
     }  
   }
   
@@ -167,7 +167,7 @@ GetTotalWeightedFullScores = function(task, AllSpacers)
     with.indels = T, collapse = F, max.mismatch = MismatchScore)
   ScoreMatrix[ScoreMatrix != 0] = 1
   
-  ScoreMatrix = ScoreMatrix * SampleSpacers$Qty
+  #ScoreMatrix = ScoreMatrix * SampleSpacers$Qty
   ScoreMatrix = t(t(ScoreMatrix) * OtherSampleSpacers$Qty)
   
   #message = list(result = ScoreMatrix, SampleNumber = task$SampleNumber, OtherSampleNumber = task$OtherSampleNumber)
@@ -213,7 +213,7 @@ UpdateFullHitMatrix = function(HitMatrix, message, AllSpacers)
 { 
   #HitMatrix = ResultObject
   HitMatrix[GetTopRow(AllSpacers, message$SampleNumber):(GetTopRow(AllSpacers, message$SampleNumber + 1) - 1), message$OtherSampleNumber] = t(rowSums(message$result))  
-  HitMatrix[GetTopRow(AllSpacers, message$OtherSampleNumber):(GetTopRow(AllSpacers, message$OtherSampleNumber + 1) - 1), message$SampleNumber] = t(colSums(message$result))
+  #HitMatrix[GetTopRow(AllSpacers, message$OtherSampleNumber):(GetTopRow(AllSpacers, message$OtherSampleNumber + 1) - 1), message$SampleNumber] = t(colSums(message$result))
   
   return = HitMatrix
 }
@@ -265,7 +265,7 @@ makeFullResultObjForWeightedSpacers = function(AllSpacers, SampleNames)
     Spacers = AllSpacers[[i]]
     
     TmpMatr = matrix(ncol = length(SampleNames), nrow = nrow(Spacers), data = 0)
-    TmpMatr[1:nrow(Spacers), i] = 1#Spacers$Qty*Spacers$Qty
+    TmpMatr[1:nrow(Spacers), i] = 0#Spacers$Qty*Spacers$Qty
     rownames(TmpMatr) = Spacers$Spacers
     ResultObject = rbind(ResultObject, TmpMatr)  
   }

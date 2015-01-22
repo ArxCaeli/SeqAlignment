@@ -4,37 +4,10 @@ library(gplots)
 library(ggplot2)
 library(RColorBrewer);
 
-AlignmentScores = read.table("c:/CRISPr/ThermusToPhage/data/res_score_sampleVSsample.txt", header = T, row.names = NULL)
+AlignmentScores = read.table("c:/CRISPr/ThermusToPhage/data/res_score_sampleVSsampleSlonnAllllll.txt", header = T, row.names = NULL)
 AlignmentScoresMatrix = data.matrix(AlignmentScores)
 AlignmentScoresMatrix = AlignmentScoresMatrix[,-1]
 
-SingleElements = c()
-
-for (i in 1:nrow(AlignmentScoresMatrix))
-{
-  if (sum(AlignmentScoresMatrix[i,]) <= 100)
-  {
-    print(i)
-    SingleElements = append(SingleElements, i)
-  }
-}
-
-SingleElements
-
-AlignmentScoresMatrix = AlignmentScoresMatrix[-SingleElements,]
-
-Loosers = c()
-for (i in 1:nrow(AlignmentScoresMatrix))
-{
-  if (runif(1, 0, 1) <= 0.75)
-  {
-    Loosers = append(Loosers, i)
-  }
-}
-nrow(AlignmentScoresMatrix)
-Loosers
-
-AlignmentScoresMatrix = AlignmentScoresMatrix[-Loosers,]
 
 
 AlignmentScoresMatrix[lower.tri(AlignmentScoresMatrix)] = 0
@@ -43,10 +16,13 @@ diag(AlignmentScoresMatrix) = 0
 diag(AlignmentScoresMatrix) = max(AlignmentScoresMatrix) * 2
 
 Zoomed = log(AlignmentScoresMatrix + 1)
+Zoomed = log(Junk + 1)
+Zoomed = log(Clean + 1)
 
 my_palette <- colorRampPalette(c("black", "yellow", "red"))(n = 1000)
 DrawMatrix = AlignmentScoresMatrix # 
 DrawMatrix = Zoomed #
+nrow(DrawMatrix)
 
 heatmap.2(DrawMatrix, trace = "none", scale = "none", Rowv = T, symm = T,
           dendrogram = "row", margins=c(16,16), rowsep=1:nrow(DrawMatrix), sepcolor="slategray1",#"gray90",
